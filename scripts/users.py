@@ -16,15 +16,6 @@ DB_HOST = os.getenv('DB_HOST')
 DB_PORT = os.getenv('DB_PORT')
 DB_NAME = os.getenv('DB_NAME')
 
-conn = psycopg2.connect(
-    dbname=DB_NAME,
-    user=DB_USER,
-    password=DB_PWD,
-    host=DB_HOST,
-    port=DB_PORT
-)
-cur = conn.cursor()
-
 def main(n):
     try:
         conn = psycopg2.connect(
@@ -40,9 +31,9 @@ def main(n):
             user_id = uuid.uuid4()
             first = fake.first_name()
             last = fake.last_name()
-            email = fake.unique.email()
+            email = f'{first.lower}.{last.lower}{random.randint(0, 100)}@gmail.com'
             area_id = random.randint(1, 10)
-
+            
             cur.execute("""
                 INSERT INTO votingsystem.users 
                 (user_id, first_name, last_name, email, area_id, created_at)
