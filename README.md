@@ -20,30 +20,28 @@ The system is designed to handle high-velocity streaming data from a voting syst
 
 ## Project Architecture
 
-The pipeline follows a **streaming architecture**:  
+This project is a **batch processing** pipeline that processes data via Apache Flink.  
 
-1. **Data Ingestion**: Voting data (`votes` table) is streamed into Apache Flink (via CDC connector or direct JDBC read).  
-2. **Transformation & Anomaly Detection**:  
-   - Detects duplicate votes (same `user_id` for a candidate).  
-   - Identifies abnormal voting rates within a time window.  
-   - Performs aggregations by `candidate_id` and `area_id`.  
-3. **Sink**: Results are written to PostgreSQL tables:  
-   - `results` (aggregated vote counts per candidate/area)  
-   - `analyzed_anomalies` (suspicious voting activity)  
-4. **Visualization**: Dashboards (Grafana/Power BI/Metabase) display real-time insights.  
+This project is divided into 4 main folders namely:
+- `jobs` which contains the Flink jobs for analysis using the Flink for Python's Table API for batch processing
+- `scripts` which contains scripts to be run to generate voter and candidate data using `Faker`, area, votes into the respective PostgreSQL tables, check database schea architecture for more information.
+- `model` which contains the model job after training
+- `sql` which contains the schema tables and columns, relationships and constraints between tables in the schema
 
 ### Project and Schema Architecture Diagrams
 
 To create the PostgreSQL tables on any admin applications e.g. dbeaver or pgAdmin4, use the SQL query code in `sql/schema.sql` to do so.
 
-**INSERT ARCHITECTURE AND SCHEMA DIAGRAMS HERE**
+![Schema Architecture](https://res.cloudinary.com/depbmpoam/image/upload/v1759684373/Screenshot_2025-10-05_201036_knfs6z.png)
 
-## Technologies Used
+![Project Architecture](https://res.cloudinary.com/depbmpoam/image/upload/v1759684346/Untitled_10_ienvil.jpg)
 
-- **Apache Flink** (1.17.x) – Streaming engine  
+## Tech Stack
+
+- **Apache Flink** version 1.17.2 – For batch processing using the Table API  
 - **PostgreSQL** – Storage for votes, results, and anomalies  
 - **Flink CDC Connector** – (Optional) For real-time DB changes  
-- **Grafana / Power BI / Metabase** – Dashboard visualization  
+- **Grafana** – Dashboard visualization  
 - **Python API for Flink, `pyflink`** – Job definition  
 
 ## Project Setup and Instructions
@@ -100,7 +98,13 @@ cp postgresql-42.6.0.jar $FLINK_HOME/lib/
 ```
 Now you can run these jobs normally using `python3 job_name.py` without setting the JAR files and using `flink run -C 'postgresql-42.6.0.jar' -C 'flink-connector-jdbc-3.1.2-1.17.jar' -py job_name.py` command to run these jobs.
 
+### 3. Setup Database Schema.
+The `schema.sql` file contains the table columns and structure
+To run this file via CLI:
+```bash
+psql -U <your_username> -d <database_name> -f schema.sql
+```
+*Or if you have dbeaver or pgAdmin4, you can upload the file or copy-paste the file contents in the SQL editor.*
 
-
-
-
+## Dashboard recordings and snapshots.
+Recordings and snapshots will be added.
