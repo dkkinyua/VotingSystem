@@ -107,4 +107,6 @@ psql -U <your_username> -d <database_name> -f schema.sql
 *Or if you have dbeaver or pgAdmin4, you can upload the file or copy-paste the file contents in the SQL editor.*
 
 ## Dashboard recordings and snapshots.
-Recordings and snapshots will be added.
+Click on the thumbnail below to access the recording of the dashboard on Loom, feel free to leave a comment and share widely.
+
+[![Watch the demo](https://res.cloudinary.com/depbmpoam/image/upload/v1759740535/Screenshot_2025-10-06_114832_vcwusc.png)](https://www.loom.com/share/20140b5224d24586b371cd218e83eb0e?sid=cd17a7ef-8637-4fff-89f0-6552c85f1462)
